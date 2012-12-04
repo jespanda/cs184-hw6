@@ -1,0 +1,97 @@
+# Simple Scene
+# To test the new detailed shape implementation
+
+# Set the scene size and camera location 
+size 800 600
+camera 0 10 1 0 0 0 0 0 1 30.0
+
+# lights.  A single point and directional light
+# light x y z w r g b a
+# w = 0 for point, 1 for directional
+
+light 0.6 0 0.1 0   1 1 1 1  
+light 0   0 2   1   1 1 1 1 
+
+pushTransform
+# translate -4 -4 0
+# model   models/roe.obj
+
+translate -2 -2 0
+model   models/roe2.obj
+
+translate 0 4 0
+model models/tea2.obj
+
+translate 4 0 0
+model models/dragon.obj
+
+translate 0 -4 0
+model models/luckycat.obj
+
+popTransform
+
+
+# declare a texture for use below
+textureDef wood wood.ppm 256 256 16.0 16.0 0.0 16.0 0.0 0.0 16.0 0.0
+
+# Floor (white but now with shading)
+# Materials first.  We don't change specular and shininess
+  ambient 0 1 1 0
+  diffuse 0.33   0 0 .3
+  specular 1 1 1 1
+  shininess 100
+
+
+# I do a global transform to move this down a little 
+# A good use of matrix stacks and hierarchy 
+pushTransform 
+
+# the floor
+# is of type poly
+shapeDef poly
+    3.0  3.0  0.0
+   -3.0  3.0  0.0
+   -3.0 -3.0  0.0
+    3.0 -3.0  0.0
+  colors
+    1 1 1 1
+    1 1 1 1
+    1 1 1 1
+    1 1 1 1
+  elements
+    0 1 2 3
+  texture wood
+    16.0 16.0
+     0.0 16.0
+     0.0  0.0
+    16.0  0.0
+shapeEnd
+
+pushTransform
+  translate 3 3 3
+  sphere 2
+popTransform
+
+rotate 1 1 0 90
+
+shapeDef poly
+    3.0  3.0  0.0
+   -3.0  3.0  0.0
+   -3.0 -3.0  0.0
+    3.0 -3.0  0.0
+  colors
+    1 1 1 1
+    1 1 1 1
+    1 1 1 1
+    1 1 1 1
+  elements
+    0 1 2 3
+  texture wood
+     1.0  1.0
+     0.0  1.0
+     0.0  0.0
+     1.0  0.0
+shapeEnd
+
+
+popTransform
