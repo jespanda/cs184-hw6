@@ -1,0 +1,566 @@
+# Scene description.
+# Lights are position (4), color (4) 
+# Materials are defined for each object
+# Scene File for Demo program 
+
+# Set the scene size and camera location 
+size 800 600
+dimensions 15.0 10.0 10.0
+# eye, center, up
+camera 20 0 3 0 0 2 0 0 1 60.0
+animate 0
+
+# Starting material properties
+  ambient 1 1 1 0
+  diffuse 0.33   0 0 .3
+  specular 1 1 1 1
+  shininess 100
+
+# lights.  A single point and directional light
+# light x y z w r g b a
+# w = 0 for point, 1 for directional
+# Note that your program must support up to 10 lights
+
+light 0   0 2   1   1 1   1 1 
+
+#roof lights
+light 1  2.75  5.0 0 1 1 1 0.3
+light 1  -2.75  5.0 0 1 1 1 0.3
+light -10  2.75  5.0 0 1 1 1 0.3
+light -10  -2.75  5.0 1 1 1 0.3
+
+textureDef bay bay.ppm 800 800
+textureDef asphalt asphalt.ppm 500 500
+textureDef grass grass.ppm 500 500
+
+# Global transform
+pushTransform 
+
+# point lights for lanterns
+
+light 2.75 0.3 1.05 1 0 0 1 1
+light -2.75 0.3 1.05 1 0 0 1 1
+
+objectDef cube
+  # cubes are a quad type poly; faces of 4 vertices each
+  shapeDef quad
+      0.5  0.5  1.0
+      -0.5  0.5  1.0
+      -0.5 -0.5  1.0
+      0.5 -0.5  1.0
+      0.5  0.5  0.0
+      -0.5  0.5  0.0
+      -0.5 -0.5  0.0
+      0.5 -0.5  0.0
+    colors
+    elements
+  # top right back left front bottom
+      0 1 2 3
+      0 3 7 4
+      2 3 7 6
+      1 2 6 5
+      0 1 5 4
+      4 5 6 7
+  shapeEnd
+objectEnd
+
+# ground
+shapeDef poly
+    100.0  100.0  0.0
+   -100.0  100.0  0.0
+   -100.0 -100.0  0.0
+    100.0 -100.0  0.0
+  colors
+		0 0 0 1
+		0 0 0 1
+		0 0 0 1
+		0 0 0 1
+  elements
+    0 1 2 3
+  texture asphalt
+    64.0 64.0
+     0.0 64.0
+     0.0  0.0
+    64.0  0.0
+shapeEnd
+
+
+#bay
+	shapeDef poly
+	   -100.0  100.0  0.0
+	   -100.0 -100.0  0.0
+	   -100.0 -100.0  100.0
+	   -100.0  100.0  100.0
+	  colors
+		1 1 1 1
+		1 1 1 1
+		1 1 1 1
+		1 1 1 1
+	  elements
+		0 1 2 3
+	  texture bay
+		1.0 1.0
+		 0.0 1.0
+		 0.0  0.0
+		1.0  0.0
+	shapeEnd
+
+	# Undo global transform
+popTransform
+
+objectStart building
+	specular 1 1 1 1
+	shininess 100
+	ambient 0 0 0 1
+	diffuse 0.1 0.1 0.1 1
+	pushTransform
+		translate 0 0 2.5
+		scale 1 1 5
+		cube 1.0
+	popTransform
+objectEnd
+
+objectStart building0
+	specular 1 1 1 1
+	shininess 100
+	ambient 0 0 0 1
+	diffuse 0.8 0.8 0.8 1
+	pushTransform
+		translate 0 0 2
+		scale 1 1 4
+		cube 1.0
+	popTransform
+objectEnd
+
+objectStart building1
+	specular 1 1 1 1
+	shininess 100
+	ambient 0 0 0 1
+	diffuse 1 1 1 1
+	pushTransform
+		translate 0 0 0.75
+		scale 1 1 1.5
+		cube 1.0
+	popTransform
+objectEnd
+
+objectStart building2
+	specular 1 1 1 1
+	shininess 100
+	ambient 0 0 0 1
+	diffuse 0.4 0.4 0.4 0.9
+	pushTransform
+		translate 0 0 3
+		scale 1 1 6
+		cube 1.0
+	popTransform
+objectEnd
+
+
+#block 1, 10, -10
+ pushTransform
+    translate -10 -10 0
+    object building0
+
+    translate 1 0 0
+    object building2
+
+    translate 1 0 0
+    object building
+
+    translate  1 0 0
+    object building1
+
+    translate 0 1 0
+    object building
+
+    translate -1 0 0
+    object building1
+
+    translate -1 0 0
+    object building
+
+    translate  -1 0 0
+    object building1
+
+    translate 0 1 0
+    object building2
+
+    translate 1 0 0
+    object building
+
+    translate 1 0 0
+    object building1
+
+    translate  1 0 0
+    object building0
+	
+    translate 0 1 0
+    object building2
+
+    translate -1 0 0
+    object building0
+
+    translate -1 0 0
+    object building2
+
+    translate  -1 0 0
+    object building
+popTransform
+
+#block 2, -5, -10
+ pushTransform
+    translate -5 -10 0
+    object building0
+
+    translate 1 0 0
+    object building1
+
+    translate 1 0 0
+    object building
+
+    translate  1 0 0
+    object building1
+
+    translate 0 1 0
+    object building
+
+    translate -1 0 0
+    object building1
+
+    translate -1 0 0
+    object building
+
+    translate  -1 0 0
+    object building1
+
+    translate 0 1 0
+    object building2
+
+    translate 1 0 0
+    object building
+
+    translate 1 0 0
+    object building1
+
+    translate  1 0 0
+    object building0
+	
+    translate 0 1 0
+    object building2
+
+    translate -1 0 0
+    object building0
+
+    translate -1 0 0
+    object building2
+
+    translate  -1 0 0
+    object building
+popTransform
+
+#block 3, 0. -10
+ pushTransform
+    translate 0 -10 0
+    object building0
+
+    translate 1 0 0
+    object building2
+
+    translate 1 0 0
+    object building
+
+    translate  1 0 0
+    object building1
+
+    translate 0 1 0
+    object building
+
+    translate -1 0 0
+    object building1
+
+    translate -1 0 0
+    object building
+
+    translate  -1 0 0
+    object building1
+
+    translate 0 1 0
+    object building2
+
+    translate 1 0 0
+    object building
+
+    translate 1 0 0
+    object building1
+
+    translate  1 0 0
+    object building0
+	
+    translate 0 1 0
+    object building2
+
+    translate -1 0 0
+    object building0
+
+    translate -1 0 0
+    object building2
+
+    translate  -1 0 0
+    object building
+popTransform
+
+#block 4, 5, -10
+ pushTransform
+    translate 5 -10 0
+    object building0
+
+    translate 1 0 0
+    object building2
+
+    translate 1 0 0
+    object building1
+
+    translate  1 0 0
+    object building1
+
+    translate 0 1 0
+    object building
+
+    translate -1 0 0
+    object building1
+
+    translate -1 0 0
+    object building
+
+    translate  -1 0 0
+    object building1
+
+    translate 0 1 0
+    object building2
+
+    translate 1 0 0
+    object building
+
+    translate 1 0 0
+    object building1
+
+    translate  1 0 0
+    object building0
+	
+    translate 0 1 0
+    object building2
+
+    translate -1 0 0
+    object building0
+
+    translate -1 0 0
+    object building2
+
+    translate  -1 0 0
+    object building
+popTransform
+
+#block 5, -10. -5
+ pushTransform
+    translate -10 -5 0
+    object building0
+
+    translate 1 0 0
+    object building2
+
+    translate 1 0 0
+    object building
+
+    translate  1 0 0
+    object building1
+
+    translate 0 1 0
+    object building
+
+    translate -1 0 0
+    object building1
+
+    translate -1 0 0
+    object building
+
+    translate  -1 0 0
+    object building1
+
+    translate 0 1 0
+    object building2
+
+    translate 1 0 0
+    object building
+
+    translate 1 0 0
+    object building1
+
+    translate  1 0 0
+    object building0
+	
+    translate 0 1 0
+    object building2
+
+    translate -1 0 0
+    object building0
+
+    translate -1 0 0
+    object building2
+
+    translate  -1 0 0
+    object building
+popTransform
+
+#block 6, -5, -5
+ pushTransform
+    translate -5 -5 0
+    object building0
+
+    translate 1 0 0
+    object building1
+
+    translate 1 0 0
+    object building
+
+    translate  1 0 0
+    object building1
+
+    translate 0 1 0
+    object building
+
+    translate -1 0 0
+    object building1
+
+    translate -1 0 0
+    object building
+
+    translate  -1 0 0
+    object building1
+
+    translate 0 1 0
+    object building2
+
+    translate 1 0 0
+    object building
+
+    translate 1 0 0
+    object building1
+
+    translate  1 0 0
+    object building0
+	
+    translate 0 1 0
+    object building2
+
+    translate -1 0 0
+    object building0
+
+    translate -1 0 0
+    object building2
+
+    translate  -1 0 0
+    object building
+popTransform
+
+#block 7, 0. -5
+ pushTransform
+    translate 0 -10 0
+    object building0
+
+    translate 1 0 0
+    object building2
+
+    translate 1 0 0
+    object building
+
+    translate  1 0 0
+    object building1
+
+    translate 0 1 0
+    object building
+
+    translate -1 0 0
+    object building1
+
+    translate -1 0 0
+    object building
+
+    translate  -1 0 0
+    object building1
+
+    translate 0 1 0
+    object building2
+
+    translate 1 0 0
+    object building
+
+    translate 1 0 0
+    object building1
+
+    translate  1 0 0
+    object building0
+	
+    translate 0 1 0
+    object building2
+
+    translate -1 0 0
+    object building0
+
+    translate -1 0 0
+    object building2
+
+    translate  -1 0 0
+    object building
+popTransform
+
+#block 8, 5, -5
+ pushTransform
+    translate 5 -10 0
+    object building0
+
+    translate 1 0 0
+    object building2
+
+    translate 1 0 0
+    object building1
+
+    translate  1 0 0
+    object building1
+
+    translate 0 1 0
+    object building
+
+    translate -1 0 0
+    object building1
+
+    translate -1 0 0
+    object building
+
+    translate  -1 0 0
+    object building1
+
+    translate 0 1 0
+    object building2
+
+    translate 1 0 0
+    object building
+
+    translate 1 0 0
+    object building1
+
+    translate  1 0 0
+    object building0
+	
+    translate 0 1 0
+    object building2
+
+    translate -1 0 0
+    object building0
+
+    translate -1 0 0
+    object building2
+
+    translate  -1 0 0
+    object building
+popTransform
