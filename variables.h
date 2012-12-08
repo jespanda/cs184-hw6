@@ -92,6 +92,7 @@ EXTERN GLfloat lightposn [4*numLights] ; // Light Positions
 EXTERN GLfloat lightcolor[4*numLights] ; // Light Colors
 EXTERN GLfloat lightransf[4*numLights] ; // Lights transformed by modelview
 EXTERN int numused ;                     // How many lights are used 
+
 // Fog Parameters
 EXTERN GLfloat fogCol[3];
 

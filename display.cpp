@@ -19,9 +19,12 @@
 #include "Transform.h"
 
 using namespace std ; 
-#include "particlesystem.h";
+
 #include "variables.h"
 #include "readfile.h"
+
+// Particle System
+#include "particlesystem.h"
 
 // New helper transformation function to transform vector by modelview 
 // May be better done using newer glm functionality.

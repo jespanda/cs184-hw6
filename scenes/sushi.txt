@@ -7,7 +7,7 @@
 size 800 600
 dimensions 15.0 10.0 10.0
 # eye, center, up
-camera 10 0 3 0 0 2 0 0 1 30.0
+camera 10 0 3 0 0 0 0 0 1 30.0
 animate 0
 
 # Starting material properties

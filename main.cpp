@@ -22,9 +22,13 @@ using namespace std ;
 
 // Main variables in the program.  
 #define MAINPROGRAM 
-#include "particlesystem.h"
 #include "variables.h" 
 #include "readfile.h" // prototypes for readfile.cpp  
+
+//Particle System
+#include "particlesystem.h"
+#include "imageloader.h"
+
 void display(void) ;  // prototype for display function.
 void setFog(void);
 /*
@@ -307,17 +311,62 @@ void specialKey(int key, int x, int y) {
   }
   glutPostRedisplay();
 }
+// Particle System
+void update(int value) {
+  _fountain->advance(TIMER_MS / 1000.0f);
+  glutPostRedisplay();
+  glutTimerFunc(TIMER_MS, update, 0);
+}
+GLuint _textureId;
+//Returns an array indicating pixel data for an RGBA image that is the same as
+//image, but with an alpha channel indicated by the grayscale image alphaChannel
+char* addAlphaChannel(Image* image, Image* alphaChannel) {
+    char* pixels = new char[image->width * image->height * 4];
+    for(int y = 0; y < image->height; y++) {
+        for(int x = 0; x < image->width; x++) {
+            for(int j = 0; j < 3; j++) {
+                pixels[4 * (y * image->width + x) + j] =
+                    image->pixels[3 * (y * image->width + x) + j];
+            }
+            pixels[4 * (y * image->width + x) + 3] =
+                alphaChannel->pixels[3 * (y * image->width + x)];
+        }
+    }
+    
+    return pixels;
+}
+
+//Makes the image into a texture, using the specified grayscale image as an
+//alpha channel and returns the id of the texture
+GLuint loadAlphaTexture(Image* image, Image* alphaChannel) {
+    char* pixels = addAlphaChannel(image, alphaChannel);
+    
+    GLuint textureId;
+    glGenTextures(1, &textureId);
+    glBindTexture(GL_TEXTURE_2D, textureId);
+    glTexImage2D(GL_TEXTURE_2D,
+                 0,
+                 GL_RGBA,
+                 image->width, image->height,
+                 0,
+                 GL_RGBA,
+                 GL_UNSIGNED_BYTE,
+                 pixels);
+    
+    delete pixels;
+    return textureId;
+}
 
 void init() {
   // Initialize shaders
   vertexshader = initshaders(GL_VERTEX_SHADER, "shaders" DIRSEP "light.vert.glsl") ;
   fragmentshader = initshaders(GL_FRAGMENT_SHADER, "shaders" DIRSEP "light.frag.glsl") ;
   // do we need this?
-	//GLuint program = glCreateProgram() ;
+  //GLuint program = glCreateProgram() ;
   shaderprogram = initprogram(vertexshader, fragmentshader) ; 
   // do we need this too?
-	//GLint linked;
-	//glGetProgramiv(shaderprogram, GL_LINK_STATUS, &linked) ;  
+  //GLint linked;
+  //glGetProgramiv(shaderprogram, GL_LINK_STATUS, &linked) ;  
   animate_obj = 0;
   animate_tex = 0;
   enablelighting = glGetUniformLocation(shaderprogram,"enablelighting") ;
@@ -333,17 +382,19 @@ void init() {
 
   hastex = glGetUniformLocation(shaderprogram,"hastex");
   texsampler = glGetUniformLocation(shaderprogram,"tex");
-	// Enable the depth test
-	glEnable(GL_DEPTH_TEST) ;
-	glDepthFunc (GL_LESS) ; // The default option
+  // Enable the depth test
+  glEnable(GL_DEPTH_TEST) ;
+  glDepthFunc (GL_LESS) ; // The default option
+  glEnable(GL_COLOR_MATERIAL);
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    
+  Image* image = loadBMP("circle.bmp");
+  Image* alphaChannel = loadBMP("circlealpha.bmp");
+  _textureId = 1;
+  delete image;
+  delete alphaChannel;
 }
-// Particle System
-void update(int value) {
-  _fountain->advance(TIMER_MS / 1000.0f);
-  glutPostRedisplay();
-  glutTimerFunc(TIMER_MS, update, 0);
-}
-
 int main(int argc, char* argv[]) {
 
   /*
@@ -393,7 +444,7 @@ int main(int argc, char* argv[]) {
   glutPassiveMotionFunc(passive_motion);
   glutReshapeFunc(reshape);
   glutReshapeWindow(w, h);
-  _fountain = new ParticleEngine(_textureId);
+  _fountain = new ParticleEngine(_textureId, 1.0f, 1.0f, 1.0f);
   //Particle
   glutTimerFunc(TIMER_MS, update, 0);
 

@@ -5,6 +5,7 @@ float randomFloat() {
 }
 //Represents a single particle.
 struct Particle {
+	Vec3f origin;
 	Vec3f pos;
 	Vec3f velocity;
 	Vec3f color;
@@ -23,8 +24,9 @@ Vec3f rotate(Vec3f v, Vec3f axis, float degrees) {
 
 //Returns the position of the particle, after rotating the camera
 Vec3f adjParticlePos(Vec3f pos) {
-	return pos;
+	return rotate(pos, Vec3f(1, 0, 0), -30);
 }
+
 
 //Returns whether particle1 is in back of particle2
 bool compareParticles(Particle* particle1, Particle* particle2) {
@@ -82,13 +84,14 @@ Vec3f curColor() {
 
 //Returns the average velocity of particles produced by the fountain.
 Vec3f curVelocity() {
-	return Vec3f(1 * cos(angle), 1.0f, 1 * sin(angle));
+	return Vec3f(-1 * sin(angle), 1.0f, -.5 * cos(angle));
 }
 
 //Alters p to be a particle newly produced by the fountain.
-void createParticle(Particle* p) {
-	p->pos = Vec3f(0, 0, 0);
-	p->velocity = curVelocity() + Vec3f(0.5f * randomFloat() - 0.25f,
+void createParticle(Particle* p, float x, float y, float z) {
+	p->origin = Vec3f(x, y, z);
+	p->pos = Vec3f(x, y, z);
+	p->velocity = curVelocity() + Vec3f(0.5f * randomFloat() -.25f,
 										0.5f * randomFloat() - 0.25f,
 										0.5f * randomFloat() - 0.25f);
 	p->color = curColor();
@@ -103,10 +106,10 @@ void step() {
 		colorTime -= 1;
 	}
 	
-	angle += 0.5f * STEP_TIME;
-	while (angle > 2 * PI) {
-		angle -= 2 * PI;
-	}
+	//angle += 0.5f * STEP_TIME;
+	//while (angle > 2 * PI) {
+	//	angle -= 2 * PI;
+	//}
 	
 	for(int i = 0; i < NUM_PARTICLES; i++) {
 		Particle* p = particles + i;
@@ -115,18 +118,18 @@ void step() {
 		p->velocity += Vec3f(0.0f, -GRAVITY * STEP_TIME, 0.0f);
 		p->timeAlive += STEP_TIME;
 		if (p->timeAlive > p->lifespan) {
-			createParticle(p);
+			createParticle(p, p->origin[0], p->origin[1], p->origin[2]);
 		}
 	}
 }
 
-ParticleEngine::ParticleEngine(GLuint textureId1) {
+ParticleEngine::ParticleEngine(GLuint textureId1, float x, float y, float z) {
 	textureId = textureId1;
 	timeUntilNextStep = 0;
 	colorTime = 0;
 	angle = 0;
 	for(int i = 0; i < NUM_PARTICLES; i++) {
-		createParticle(particles + i);
+		createParticle(particles + i, x, y, z);
 	}
 	for(int i = 0; i < 10 / STEP_TIME; i++) {
 		step();

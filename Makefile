@@ -15,8 +15,8 @@ endif
 
 RM = /bin/rm -f 
 all: transform
-transform: main.o particlesystem.o vec3f.o glm.o glmimg.o objreader.o shapes.o shaders.o Texture.o Transform.o readfile.o display.o particlesystem.h vec3f.h variables.h readfile.h shaders.h Transform.h grader.o UCB/grader.h
-	$(CC) $(CFLAGS) -o transforms particlesystem.o vec3f.o glm.o glmimg.o Texture.o objreader.o shaders.o shapes.o main.o Transform.o readfile.o display.o grader.o $(INCFLAGS) $(LDFLAGS) 
+transform: main.o particlesystem.o vec3f.o imageloader.o glm.o glmimg.o objreader.o shapes.o shaders.o Texture.o Transform.o readfile.o display.o particlesystem.h vec3f.h imageloader.h variables.h readfile.h shaders.h Transform.h grader.o UCB/grader.h
+	$(CC) $(CFLAGS) -o transforms particlesystem.o vec3f.o imageloader.o glm.o glmimg.o Texture.o objreader.o shaders.o shapes.o main.o Transform.o readfile.o display.o grader.o $(INCFLAGS) $(LDFLAGS) 
 main.o: main.cpp shaders.h Transform.h variables.h glm.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c main.cpp
 glm.o: glm.cpp glm.h
@@ -45,6 +45,8 @@ particlesystem.o: particlesystem.cpp vec3f.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c particlesystem.cpp 
 vec3f.o: vec3f.cpp
 	$(CC) $(CFLAGS) $(INCFLAGS) -c vec3f.cpp
+imageloader.o: imageloader.cpp 
+	$(CC) $(CFLAGS) $(INCFLAGS) -c imageloader.cpp
 
 #Clean everything up
 clean: 
