@@ -52,13 +52,9 @@ void clearLightingFlag( lighting_flag flag ) {
 void display() {
   glClearColor(.010, .01, 0.2, 0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-<<<<<<< HEAD
-
   glEnable( GL_TEXTURE_2D );
-=======
   glEnable (GL_BLEND); 
   glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
->>>>>>> 07b690d94bc0c7135bac6bcc8799f289384d69a3
   // I'm including the basic matrix setup for model view to 
   // give some sense of how this works.  
 
