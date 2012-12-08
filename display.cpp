@@ -52,9 +52,8 @@ void clearLightingFlag( lighting_flag flag ) {
 void display() {
   glClearColor(.010, .01, 0.2, 0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-  glEnable( GL_TEXTURE_2D );
-  
+  glEnable (GL_BLEND); 
+  glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   // I'm including the basic matrix setup for model view to 
   // give some sense of how this works.  
 
@@ -123,9 +122,7 @@ void display() {
     //obj->dump();
     glPushMatrix();
     glLoadMatrixf(&o[0][0]) ;
-	if (obj->animate==1) {
-		glTranslatef(move_boats_x, move_boats_y, 0.0) ;
-	}
+
     obj->draw();
 
     glPopMatrix();
