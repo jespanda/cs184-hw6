@@ -157,7 +157,7 @@ objectStart building2
 	specular 1 1 1 1
 	shininess 30
 	ambient 0 0 0 0.5
-	diffuse 0.4 0.4 0.4 0.9
+	diffuse 0.4 0.4 0.4 0.7
 	pushTransform
 		translate 0 0 6
 		scale 2 2 12
@@ -601,8 +601,8 @@ diffuse 1 0.1 0.1 1
 shapeDef poly
     -2 -6  0.05
    -2 6  0.05
-    8 6   0.05
-   8 -6 0.05
+    20 6   0.05
+   20 -6 0.05
   colors
     1 1 1 1
     1 1 1 1
@@ -616,3 +616,48 @@ shapeDef poly
      0.0  0.0
     4.0  0.0
 shapeEnd
+
+shapeDef poly
+    0 -2  0.06
+   0 2  0.06
+    20 2   0.06
+   20 -2 0.06
+  colors
+    1 1 1 1
+    1 1 1 1
+    1 1 1 1
+    1 1 1 1
+  elements
+    0 1 2 3
+  texture sidewalk
+    4.0 4.0
+     0.0 4.0
+     0.0  0.0
+    4.0  0.0
+shapeEnd
+
+
+specular 1 1 1 1
+shininess 30
+ambient 0 0 0 1.0
+diffuse 0.4 0.4 0.6 1.0
+pushTransform
+	translate 12 -3 0.25
+	scale 8.5 2 0.5
+	cube 1.0
+popTransform
+pushTransform
+	translate 12 3 0.25
+	scale 8.5 2 0.5
+	cube 1.0
+popTransform
+pushTransform
+	translate 12 -3 1.5
+	scale 8 0.75 3
+	cube 1.0
+popTransform
+pushTransform
+	translate 12 3 1.5
+	scale 8 0.75 3
+	cube 1.0
+popTransform
