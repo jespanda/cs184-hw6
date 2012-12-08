@@ -43,7 +43,7 @@ const int NUM_PARTICLES = 1000;
 //steps.
 const float STEP_TIME = 0.01f;
 //The length of the sides of the quadrilateral drawn for each particle.
-const float PARTICLE_SIZE = 0.15f;
+const float PARTICLE_SIZE = 0.05f;
 
 const int TIMER_MS = 100; //The number of milliseconds to which the timer is set
 //Returns a random float from 0 to < 1
