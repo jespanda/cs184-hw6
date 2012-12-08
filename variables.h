@@ -20,7 +20,9 @@
 #include <string.h>
 
 
+
 class Grader;
+class ParticleEngine;
 
 EXTERN int amount; // The amount of rotation for each arrow press
 EXTERN vec3 eye; // The (regularly updated) vector coordinates of the eye 
@@ -73,6 +75,8 @@ EXTERN float move_boats_y;
 EXTERN float frame;
 EXTERN bool enable_tex;
 
+EXTERN ParticleEngine* _fountain;
+
 EXTERN bool useGlu; // Toggle use of "official" opengl/glm transform vs user 
 EXTERN GLuint vertexshader, fragmentshader, shaderprogram ; // shaders
 static enum {rotate, translate, view, scale} transop ; // which operation to transform 
@@ -88,6 +92,8 @@ EXTERN GLfloat lightposn [4*numLights] ; // Light Positions
 EXTERN GLfloat lightcolor[4*numLights] ; // Light Colors
 EXTERN GLfloat lightransf[4*numLights] ; // Lights transformed by modelview
 EXTERN int numused ;                     // How many lights are used 
+// Fog Parameters
+EXTERN GLfloat fogCol[3];
 
 // Materials (read from file) 
 // With multiple shapes, these are colors for each.

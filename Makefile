@@ -1,6 +1,6 @@
 CC = g++
 ifeq ($(shell sw_vers 2>/dev/null | grep Mac | awk '{ print $$2}'),Mac)
-CFLAGS = -g -DGL_GLEXT_PROTOTYPES -DOSX
+CFLAGS = -g -DGL_GLEXT_PROTOTYPES -DOSX -Wall
 INCFLAGS = -I./glm-0.9.2.7 -I/usr/X11/include -I./include/
 LDFLAGS = -framework GLUT -framework OpenGL -L./osxlib/ \
 		-L"/System/Library/Frameworks/OpenGL.framework/Libraries" \
@@ -15,8 +15,8 @@ endif
 
 RM = /bin/rm -f 
 all: transform
-transform: main.o glm.o glmimg.o objreader.o shapes.o shaders.o Texture.o Transform.o readfile.o display.o variables.h readfile.h shaders.h Transform.h grader.o UCB/grader.h
-	$(CC) $(CFLAGS) -o transforms glm.o glmimg.o Texture.o objreader.o shaders.o shapes.o main.o Transform.o readfile.o display.o grader.o $(INCFLAGS) $(LDFLAGS) 
+transform: main.o particlesystem.o vec3f.o glm.o glmimg.o objreader.o shapes.o shaders.o Texture.o Transform.o readfile.o display.o particlesystem.h vec3f.h variables.h readfile.h shaders.h Transform.h grader.o UCB/grader.h
+	$(CC) $(CFLAGS) -o transforms particlesystem.o vec3f.o glm.o glmimg.o Texture.o objreader.o shaders.o shapes.o main.o Transform.o readfile.o display.o grader.o $(INCFLAGS) $(LDFLAGS) 
 main.o: main.cpp shaders.h Transform.h variables.h glm.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c main.cpp
 glm.o: glm.cpp glm.h
@@ -39,6 +39,14 @@ Transform.o: Transform.cpp Transform.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c Transform.cpp  
 grader.o: UCB/grader.cpp UCB/grader.h
 	$(CC) $(CFLAGS) $(INCFLAGS) -c UCB/grader.cpp
+
+# Adding in particle engine
+particlesystem.o: particlesystem.cpp vec3f.h
+	$(CC) $(CFLAGS) $(INCFLAGS) -c particlesystem.cpp 
+vec3f.o: vec3f.cpp
+	$(CC) $(CFLAGS) $(INCFLAGS) -c vec3f.cpp
+
+#Clean everything up
 clean: 
 	$(RM) *.o transforms *.png
 
