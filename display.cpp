@@ -19,6 +19,7 @@
 #include "Transform.h"
 
 using namespace std ; 
+#include "particlesystem.h";
 #include "variables.h"
 #include "readfile.h"
 
@@ -48,10 +49,10 @@ void clearLightingFlag( lighting_flag flag ) {
   lightingFlags ^= (lightingFlags & flag );
   glUniform1i( enablelighting, lightingFlags );
 }
-
 void display() {
   glClearColor(.010, .01, 0.2, 0);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glEnable( GL_TEXTURE_2D );
   glEnable (GL_BLEND); 
   glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
   // I'm including the basic matrix setup for model view to 
@@ -68,8 +69,6 @@ void display() {
     mv = glm::transpose(mv) ; // accounting for row major
   }
   glLoadMatrixf(&mv[0][0]) ; 
-
-
   // Transformations for shapes, involving translation and scaling 
   mat4 sc(1.0) , tr(1.0), transf(1.0) ; 
   sc = Transform::scale(sx,sy,sz) ; 
@@ -100,8 +99,6 @@ void display() {
     //glUniform1i(enablelighting,false) ; 
   }
 
-
-
   // YOUR CODE FOR HW 2 HERE.  
   // You need to use scale, translate and modelview to 
   // set up the net transformation matrix for the shapes.  
@@ -126,8 +123,10 @@ void display() {
     obj->draw();
 
     glPopMatrix();
-
   }
+  // Code for particle system
+  _fountain->draw();
+
   glutSwapBuffers();
   glFlush();
 }

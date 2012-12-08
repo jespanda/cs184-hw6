@@ -22,10 +22,11 @@ using namespace std ;
 
 // Main variables in the program.  
 #define MAINPROGRAM 
+#include "particlesystem.h"
 #include "variables.h" 
 #include "readfile.h" // prototypes for readfile.cpp  
 void display(void) ;  // prototype for display function.
-
+void setFog(void);
 /*
 Grader grader;
 bool allowGrader = false;
@@ -336,6 +337,12 @@ void init() {
 	glEnable(GL_DEPTH_TEST) ;
 	glDepthFunc (GL_LESS) ; // The default option
 }
+// Particle System
+void update(int value) {
+  _fountain->advance(TIMER_MS / 1000.0f);
+  glutPostRedisplay();
+  glutTimerFunc(TIMER_MS, update, 0);
+}
 
 int main(int argc, char* argv[]) {
 
@@ -344,11 +351,11 @@ int main(int argc, char* argv[]) {
     cerr << "Usage: transforms [scenefile] [grader input (optional)]\n"; 
     exit(-1); 
   }//*/
-
+  srand((unsigned int)time(0)); //Seed the random number generator
   FreeImage_Initialise();
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-  glutCreateWindow("HW4: Sushi");
+  glutCreateWindow("HW6: City");
 
 #ifdef _WINDOWS
   	GLenum err = glewInit() ; 
@@ -377,6 +384,7 @@ int main(int argc, char* argv[]) {
     readfile(scenefile.c_str());
   }
 
+  //glutDisplayFunc(setFog);
   glutDisplayFunc(display);
   glutSpecialFunc(specialKey);
   glutKeyboardFunc(keyboard);
@@ -385,6 +393,9 @@ int main(int argc, char* argv[]) {
   glutPassiveMotionFunc(passive_motion);
   glutReshapeFunc(reshape);
   glutReshapeWindow(w, h);
+  _fountain = new ParticleEngine(_textureId);
+  //Particle
+  glutTimerFunc(TIMER_MS, update, 0);
 
   if (argc > 2) {
     allowGrader = true;
@@ -397,7 +408,6 @@ int main(int argc, char* argv[]) {
     grader.bindKeyboardFunc(keyboard);
     grader.bindScreenshotFunc(saveScreenshot);
   }
-
   printHelp();
   glutMainLoop();
   FreeImage_DeInitialise();
