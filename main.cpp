@@ -320,16 +320,16 @@ void update(int value) {
 GLuint _textureId;
 //Returns an array indicating pixel data for an RGBA image that is the same as
 //image, but with an alpha channel indicated by the grayscale image alphaChannel
-char* addAlphaChannel(Image* image, Image* alphaChannel) {
-    char* pixels = new char[image->width * image->height * 4];
-    for(int y = 0; y < image->height; y++) {
-        for(int x = 0; x < image->width; x++) {
+char* addAlphaChannel(Image* image1, Image* alphaChannel) {
+    char* pixels = new char[image1->width * image1->height * 4];
+    for(int y = 0; y < image1->height; y++) {
+        for(int x = 0; x < image1->width; x++) {
             for(int j = 0; j < 3; j++) {
-                pixels[4 * (y * image->width + x) + j] =
-                    image->pixels[3 * (y * image->width + x) + j];
+                pixels[4 * (y * image1->width + x) + j] =
+                    image1->pixels[3 * (y * image1->width + x) + j];
             }
-            pixels[4 * (y * image->width + x) + 3] =
-                alphaChannel->pixels[3 * (y * image->width + x)];
+            pixels[4 * (y * image1->width + x) + 3] =
+                alphaChannel->pixels[3 * (y * image1->width + x)];
         }
     }
     
@@ -338,8 +338,8 @@ char* addAlphaChannel(Image* image, Image* alphaChannel) {
 
 //Makes the image into a texture, using the specified grayscale image as an
 //alpha channel and returns the id of the texture
-GLuint loadAlphaTexture(Image* image, Image* alphaChannel) {
-    char* pixels = addAlphaChannel(image, alphaChannel);
+GLuint loadAlphaTexture(Image* image1, Image* alphaChannel) {
+    char* pixels = addAlphaChannel(image1, alphaChannel);
     
     GLuint textureId;
     glGenTextures(1, &textureId);
@@ -347,7 +347,7 @@ GLuint loadAlphaTexture(Image* image, Image* alphaChannel) {
     glTexImage2D(GL_TEXTURE_2D,
                  0,
                  GL_RGBA,
-                 image->width, image->height,
+                 image1->width, image1->height,
                  0,
                  GL_RGBA,
                  GL_UNSIGNED_BYTE,
@@ -389,10 +389,10 @@ void init() {
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-  Image* image = loadBMP("circle.bmp");
+  Image* image1 = loadBMP("circle.bmp");
   Image* alphaChannel = loadBMP("circlealpha.bmp");
-  _textureId = 1;
-  delete image;
+  _textureId = loadAlphaTexture(image1, alphaChannel);
+  delete image1;
   delete alphaChannel;
 }
 int main(int argc, char* argv[]) {
@@ -435,7 +435,6 @@ int main(int argc, char* argv[]) {
     readfile(scenefile.c_str());
   }
 
-  //glutDisplayFunc(setFog);
   glutDisplayFunc(display);
   glutSpecialFunc(specialKey);
   glutKeyboardFunc(keyboard);
@@ -444,7 +443,7 @@ int main(int argc, char* argv[]) {
   glutPassiveMotionFunc(passive_motion);
   glutReshapeFunc(reshape);
   glutReshapeWindow(w, h);
-  _fountain = new ParticleEngine(_textureId, 1.0f, 1.0f, 1.0f);
+  _fountain = new ParticleEngine(_textureId, 1.0f, 1.0f, 2.0f);
   //Particle
   glutTimerFunc(TIMER_MS, update, 0);
 

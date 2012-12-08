@@ -48,7 +48,7 @@ float angle;
 //The origin
 Vec3f origin;
 //Returns the current color of particles produced by the fountain.
-Vec3f curColor() {
+Vec3f ParticleEngine::curColor() {
 	Vec3f color;
 	if (colorTime < 0.166667f) {
 		color = Vec3f(1.0f, colorTime * 6, 0.0f);
@@ -83,12 +83,12 @@ Vec3f curColor() {
 }
 
 //Returns the average velocity of particles produced by the fountain.
-Vec3f curVelocity() {
+Vec3f ParticleEngine::curVelocity() {
 	return Vec3f(-5 * sin(angle), 3.0f, -.5 * cos(angle));
 }
 
 //Alters p to be a particle newly produced by the fountain.
-void createParticle(Particle* p, float x, float y, float z) {
+void ParticleEngine::createParticle(Particle* p, float x, float y, float z) {
 	p->origin = Vec3f(x, y, z);
 	p->pos = Vec3f(x, y, z);
 	p->velocity = curVelocity() + Vec3f(0.5f * randomFloat() -.25f,
@@ -100,7 +100,7 @@ void createParticle(Particle* p, float x, float y, float z) {
 }
 
 //Advances the particle fountain by STEP_TIME seconds.
-void step() {
+void ParticleEngine::step() {
 	colorTime += STEP_TIME / 10;
 	while (colorTime >= 1) {
 		colorTime -= 1;

@@ -49,6 +49,21 @@ const int TIMER_MS = 100; //The number of milliseconds to which the timer is set
 //Returns a random float from 0 to < 1
 
 class ParticleEngine {
+    private:
+        GLuint textureId;
+        Particle particles[NUM_PARTICLES];
+        //The amount of time until the next call to step().
+        float timeUntilNextStep;
+        //The color of particles that the fountain is currently shooting.  0
+        //indicates red, and when it reaches 1, it starts over at red again.  It
+        //always lies between 0 and 1.
+        float colorTime;
+        //The angle at which the fountain is shooting particles, in radians.
+        float angle;
+        curColor();
+        curVelocity();
+        createParticle();
+        step();
     public:
         ParticleEngine(GLuint textureId1, float x, float y, float z); 
         //Advances the particle fountain by the specified amount of time.
