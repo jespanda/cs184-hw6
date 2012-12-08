@@ -1,0 +1,35 @@
+# Blender MTL File: ''
+# Material Count: 3
+newmtl bell_cat3.jpg
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.470588 0.470588 0.470588
+Ks 0.449020 0.449020 0.449020
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd cat3.tga
+
+
+newmtl manekineko1_cat.jpg
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.470588 0.470588 0.470588
+Ks 0.449020 0.449020 0.449020
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd cat.tga
+
+
+newmtl manekineko2_cat2.jpg
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.470588 0.470588 0.470588
+Ks 0.449020 0.449020 0.449020
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd cat2.tga
+
+

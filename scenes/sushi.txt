@@ -793,13 +793,21 @@ popTransform
 		scale  2.0 5.5 1.5
 		cube 1.0
 	popTransform
-
+	
 	pushTransform
 		ambient 0 0 0 1
 		diffuse 1 0 0 1
 		translate 1.5 1.5 1.51
 		scale 0.5 0.5 0.05
 		sphere 1.0
+	popTransform
+	
+	pushTransform
+		scale 0.25 0.25 0.25
+		translate 5 -3 7.5
+		rotate 1 0 0 90
+		rotate 0 1 0 -90
+		model models/fish.obj
 	popTransform
 	
 	pushTransform
@@ -903,6 +911,27 @@ popTransform
 		 0.0  0.0
 		1.0  0.0
 	shapeEnd
+  
+  
+  #fishtank
+  	pushTransform
+	ambient 0.4 0.4 1 0.001
+	  diffuse 0.4 0.4 1 0
+		specular 0 0 0 0.1
+		shininess 0.5
+		translate 1.5 -1.5 2
+		scale  1.0 2 1.0
+		cube 1.0
+	popTransform
+	
+  	pushTransform
+	ambient 1 1 1 0.5
+	  diffuse 0.2 0.5 0 0.1
+		shininess 0.5
+		translate 1.5 -1.5 2
+		scale  0.7 1.7 0.7
+		cube 1.0
+	popTransform
   
 # Undo global transform
 popTransform
