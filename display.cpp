@@ -122,7 +122,17 @@ void display() {
     //obj->dump();
     glPushMatrix();
     glLoadMatrixf(&o[0][0]) ;
+	if (obj->animate==1) {
+		glTranslatef(move_boats_x, move_boats_y, 0.0);
 
+	}
+	if (obj->animate ==2) {
+		glRotatef(spin_degrees, 0, 0, 5);
+	}
+	if (discomode) {
+		glRotatef(spin_degrees, -5, 8, 0);
+	}
+    obj->draw();
     obj->draw();
 
     glPopMatrix();

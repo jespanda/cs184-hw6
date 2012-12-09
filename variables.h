@@ -72,7 +72,9 @@ EXTERN float max_z;
 
 EXTERN float move_boats_x;
 EXTERN float move_boats_y;
+EXTERN float spin_degrees;
 EXTERN float frame;
+EXTERN bool discomode;
 EXTERN bool enable_tex;
 
 EXTERN ParticleEngine* _fountain;

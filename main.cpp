@@ -74,6 +74,10 @@ void animation(void) {
 			move_boats_x+=0.1;
 		}
 	}
+	if (spin_degrees>360) {
+		spin_degrees = 0;
+	}
+	spin_degrees+=10;
 	//changes texture
 	frame+=0.02;
 	if (frame>3) frame = 0;
@@ -132,6 +136,10 @@ void keyboard(unsigned char key, int x, int y) {
     reshape(w,h) ; 
     std::cout << "Using glm::LookAt and glm::Perspective set to: " << (useGlu ? " true " : " false ") << "\n" ; 
     break;
+  case 'q':
+	  discomode = !discomode;
+	  std::cout << "Toggled disco (now " << (discomode?"on":"off") << ")\n";
+	  break;
   case 'h':
     printHelp();
     break;
