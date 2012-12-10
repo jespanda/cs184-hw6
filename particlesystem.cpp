@@ -1,5 +1,14 @@
 #include "particlesystem.h"
 #include "vec3f.h"
+
+const float GRAVITY = -3.0f;
+const int NUM_PARTICLES = 150;
+//The interval of time, in seconds, by which the particle engine periodically
+//steps.
+const float STEP_TIME = 0.05f;
+//The length of the sides of the quadrilateral drawn for each particle.
+const float PARTICLE_SIZE = 0.05f;
+
 float randomFloat() {
 	return (float)rand() / ((float)RAND_MAX + 1);
 }
@@ -24,7 +33,7 @@ Vec3f rotate(Vec3f v, Vec3f axis, float degrees) {
 
 //Returns the position of the particle, after rotating the camera
 Vec3f adjParticlePos(Vec3f pos) {
-	return rotate(pos, Vec3f(1, 0, 0), -30);
+	return pos;
 }
 
 
@@ -84,7 +93,7 @@ Vec3f curColor() {
 
 //Returns the average velocity of particles produced by the fountain.
 Vec3f curVelocity() {
-	return Vec3f(-5 * sin(angle), 3.0f, -.5 * cos(angle));
+	return Vec3f(-.05 * sin(angle), 0.5f, -.05 * cos(angle));
 }
 
 //Alters p to be a particle newly produced by the fountain.
@@ -127,7 +136,7 @@ ParticleEngine::ParticleEngine(GLuint textureId1, float x, float y, float z) {
 	textureId = textureId1;
 	timeUntilNextStep = 0;
 	colorTime = 0;
-	angle = 0;
+	angle = 90;
 	for(int i = 0; i < NUM_PARTICLES; i++) {
 		createParticle(particles + i, x, y, z);
 	}

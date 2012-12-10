@@ -37,13 +37,6 @@
 
 using namespace std;
 const float PI = 3.1415926535f;
-const float GRAVITY = 2.0f;
-const int NUM_PARTICLES = 1000;
-//The interval of time, in seconds, by which the particle engine periodically
-//steps.
-const float STEP_TIME = 0.01f;
-//The length of the sides of the quadrilateral drawn for each particle.
-const float PARTICLE_SIZE = 0.05f;
 
 const int TIMER_MS = 100; //The number of milliseconds to which the timer is set
 //Returns a random float from 0 to < 1

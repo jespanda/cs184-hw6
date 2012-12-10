@@ -451,7 +451,7 @@ int main(int argc, char* argv[]) {
   glutPassiveMotionFunc(passive_motion);
   glutReshapeFunc(reshape);
   glutReshapeWindow(w, h);
-  _fountain = new ParticleEngine(_textureId, 1.0f, 1.0f, 2.0f);
+  _fountain = new ParticleEngine(_textureId, 3.50f, 0.4f, 1.25f);
   //Particle
   glutTimerFunc(TIMER_MS, update, 0);
 

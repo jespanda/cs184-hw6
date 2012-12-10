@@ -108,6 +108,9 @@ void display() {
   // Account for GLM issues etc.  
 
   int oc = 0;
+  
+  _fountain->draw();
+
   for (list<shape*>::iterator it = shapes.begin();
       it != shapes.end();
       it++, oc++ ) {
@@ -138,7 +141,6 @@ void display() {
     glPopMatrix();
   }
   // Code for particle system
-  _fountain->draw();
 
   glutSwapBuffers();
   glFlush();
